@@ -1,25 +1,34 @@
 // JavaScript Document
 
 /*
-
-TemplateMo 609 Crypto Vault
-
-https://templatemo.com/tm-609-crypto-vault
-
+GreenEdge Markets
+Stock Investing Website
 */
 
 
-// Navigation scroll effect
+// =============================
+// NAVBAR SCROLL EFFECT
+// =============================
+
 const navbar = document.getElementById('navbar');
+
+if (navbar) {
 window.addEventListener('scroll', () => {
+
    if (window.scrollY > 50) {
       navbar.classList.add('scrolled');
    } else {
       navbar.classList.remove('scrolled');
    }
-});
 
-// Mobile Menu
+});
+}
+
+
+// =============================
+// MOBILE MENU
+// =============================
+
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
@@ -27,186 +36,234 @@ const mobileMenuClose = document.getElementById('mobileMenuClose');
 const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
 
 function openMobileMenu() {
+
+   if (!mobileMenu) return;
+
    mobileMenu.classList.add('open');
    mobileMenuOverlay.classList.add('open');
    mobileMenuBtn.classList.add('active');
    document.body.classList.add('menu-open');
+
 }
 
 function closeMobileMenu() {
+
+   if (!mobileMenu) return;
+
    mobileMenu.classList.remove('open');
    mobileMenuOverlay.classList.remove('open');
    mobileMenuBtn.classList.remove('active');
    document.body.classList.remove('menu-open');
+
 }
 
-mobileMenuBtn.addEventListener('click', openMobileMenu);
-mobileMenuClose.addEventListener('click', closeMobileMenu);
-mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenu);
 
-// Close mobile menu when clicking a link
+
+// Close mobile menu when clicking links
 mobileNavLinks.forEach(link => {
-   link.addEventListener('click', () => {
-      closeMobileMenu();
-   });
+   link.addEventListener('click', closeMobileMenu);
 });
 
-// Close mobile menu on escape key
+
+// Close menu with ESC key
 document.addEventListener('keydown', (e) => {
+
    if (e.key === 'Escape') {
       closeMobileMenu();
    }
+
 });
 
-// Smooth scroll for navigation links
+
+// =============================
+// SMOOTH SCROLL
+// =============================
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-   anchor.addEventListener('click', function (e) {
+
+anchor.addEventListener('click', function (e) {
+
+   const target = document.querySelector(this.getAttribute('href'));
+
+   if (target) {
+
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-         target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-         });
-      }
-   });
+
+      target.scrollIntoView({
+         behavior: 'smooth',
+         block: 'start'
+      });
+
+   }
+
 });
 
-// Active menu highlighting on scroll
+});
+
+
+// =============================
+// ACTIVE NAV HIGHLIGHT
+// =============================
+
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 
 function highlightNavOnScroll() {
-   const scrollPos = window.scrollY + 150;
 
-   sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      const sectionId = section.getAttribute('id');
+const scrollPos = window.scrollY + 150;
 
-      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-         // Desktop nav
-         navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + sectionId) {
-               link.classList.add('active');
-            }
-         });
-         // Mobile nav
-         mobileNavLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + sectionId) {
-               link.classList.add('active');
-            }
-         });
-      }
-   });
+sections.forEach(section => {
 
-   // Remove active if at top of page
-   if (window.scrollY < 100) {
-      navLinks.forEach(link => link.classList.remove('active'));
-      mobileNavLinks.forEach(link => link.classList.remove('active'));
+   const sectionTop = section.offsetTop;
+   const sectionHeight = section.offsetHeight;
+   const sectionId = section.getAttribute('id');
+
+   if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+
+      navLinks.forEach(link => {
+
+         link.classList.remove('active');
+
+         if (link.getAttribute('href') === '#' + sectionId) {
+            link.classList.add('active');
+         }
+
+      });
+
+      mobileNavLinks.forEach(link => {
+
+         link.classList.remove('active');
+
+         if (link.getAttribute('href') === '#' + sectionId) {
+            link.classList.add('active');
+         }
+
+      });
+
    }
+
+});
+
 }
 
 window.addEventListener('scroll', highlightNavOnScroll);
 
-// Product tabs
+
+// =============================
+// TABS (if used)
+// =============================
+
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.products-tab-content');
 
 tabBtns.forEach(btn => {
-   btn.addEventListener('click', () => {
-      const tabId = btn.getAttribute('data-tab');
 
-      // Remove active from all buttons
-      tabBtns.forEach(b => b.classList.remove('active'));
-      // Add active to clicked button
-      btn.classList.add('active');
+btn.addEventListener('click', () => {
 
-      // Hide all tab contents
-      tabContents.forEach(content => {
-         content.classList.remove('active');
-      });
+   const tabId = btn.getAttribute('data-tab');
 
-      // Show selected tab content
-      const activeContent = document.getElementById('tab-' + tabId);
-      if (activeContent) {
-         activeContent.classList.add('active');
-      }
+   tabBtns.forEach(b => b.classList.remove('active'));
+   btn.classList.add('active');
+
+   tabContents.forEach(content => {
+      content.classList.remove('active');
    });
+
+   const activeContent = document.getElementById('tab-' + tabId);
+
+   if (activeContent) {
+      activeContent.classList.add('active');
+   }
+
 });
 
-// Testimonial Slider
+});
+
+
+// =============================
+// TESTIMONIAL SLIDER
+// =============================
+
 const testimonialsTrack = document.getElementById('testimonialsTrack');
 const testimonialDots = document.querySelectorAll('#testimonialDots .dot');
 const testimonialPrev = document.getElementById('testimonialPrev');
 const testimonialNext = document.getElementById('testimonialNext');
-const totalTestimonials = testimonialDots.length;
+
 let currentTestimonial = 0;
+const totalTestimonials = testimonialDots.length;
 
 function goToTestimonial(index) {
-   if (index < 0) index = totalTestimonials - 1;
-   if (index >= totalTestimonials) index = 0;
 
-   currentTestimonial = index;
-   testimonialsTrack.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+if (!testimonialsTrack) return;
 
-   testimonialDots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentTestimonial);
-   });
+if (index < 0) index = totalTestimonials - 1;
+if (index >= totalTestimonials) index = 0;
+
+currentTestimonial = index;
+
+testimonialsTrack.style.transform =
+`translateX(-${currentTestimonial * 100}%)`;
+
+testimonialDots.forEach((dot, i) => {
+dot.classList.toggle('active', i === currentTestimonial);
+});
+
 }
 
 testimonialDots.forEach((dot, index) => {
-   dot.addEventListener('click', () => {
-      goToTestimonial(index);
-   });
+dot.addEventListener('click', () => goToTestimonial(index));
 });
 
-testimonialPrev.addEventListener('click', () => {
-   goToTestimonial(currentTestimonial - 1);
+if (testimonialPrev) testimonialPrev.addEventListener('click', () => {
+goToTestimonial(currentTestimonial - 1);
 });
 
-testimonialNext.addEventListener('click', () => {
-   goToTestimonial(currentTestimonial + 1);
+if (testimonialNext) testimonialNext.addEventListener('click', () => {
+goToTestimonial(currentTestimonial + 1);
 });
 
-// Auto-advance testimonials every 6 seconds
-let testimonialAutoPlay = setInterval(() => {
-   goToTestimonial(currentTestimonial + 1);
-}, 6000);
 
-// Pause auto-play on hover
-document.querySelector('.testimonials-wrapper').addEventListener('mouseenter', () => {
-   clearInterval(testimonialAutoPlay);
-});
+// =============================
+// CONTACT FORM
+// =============================
 
-document.querySelector('.testimonials-wrapper').addEventListener('mouseleave', () => {
-   testimonialAutoPlay = setInterval(() => {
-      goToTestimonial(currentTestimonial + 1);
-   }, 6000);
-});
-
-// Form submission
 const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
-   e.preventDefault();
-   alert('Thank you for your inquiry! Our team will contact you within 24 hours.');
-   contactForm.reset();
+
+if (contactForm) {
+
+contactForm.addEventListener('submit', () => {
+
+alert("Thank you! Your message has been sent.");
+
 });
 
-// Simulate live price updates (for demo purposes)
-function updatePrices() {
-   const priceElement = document.querySelector('.price-value');
-   const changeElement = document.querySelector('.price-change');
-
-   // Random price fluctuation for demo
-   const basePrice = 4285.50;
-   const fluctuation = (Math.random() - 0.5) * 10;
-   const newPrice = (basePrice + fluctuation).toFixed(2);
-
-   // This is just for visual effect - in production, connect to real API
 }
 
-// Update prices every 30 seconds (demo)
+
+// =============================
+// DEMO STOCK PRICE UPDATE
+// =============================
+
+function updatePrices() {
+
+const priceElements = document.querySelectorAll('.price-value');
+
+priceElements.forEach(price => {
+
+let basePrice = parseFloat(price.textContent.replace("$",""));
+
+let change = (Math.random() - 0.5) * 2;
+
+let newPrice = (basePrice + change).toFixed(2);
+
+price.textContent = "$" + newPrice;
+
+});
+
+}
+
+// simulate market movement every 30s
 setInterval(updatePrices, 30000);
