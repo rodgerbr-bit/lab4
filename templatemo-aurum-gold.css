@@ -1,0 +1,151 @@
+/* GLOBAL */
+
+body{
+background:#0b0b0b;
+color:#e6e6e6;
+font-family:Arial, Helvetica, sans-serif;
+margin:0;
+}
+
+a{
+color:#00ff9d;
+text-decoration:none;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#121212;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+color:white;
+}
+
+.logo span{
+color:#00ff9d;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+margin:0;
+padding:0;
+}
+
+nav a{
+color:white;
+}
+
+/* HERO */
+
+.hero{
+padding:120px 40px;
+text-align:center;
+background:#0b0b0b;
+}
+
+.hero h1{
+font-size:52px;
+}
+
+.hero span{
+color:#00ff9d;
+}
+
+.hero p{
+max-width:650px;
+margin:auto;
+color:#9ca3af;
+}
+
+/* BUTTON */
+
+.btn-primary{
+background:linear-gradient(135deg,#00ff9d,#00c96b);
+padding:14px 30px;
+border-radius:6px;
+color:black;
+font-weight:bold;
+display:inline-block;
+margin-top:25px;
+}
+
+/* SECTIONS */
+
+.section{
+padding:80px 40px;
+text-align:center;
+}
+
+.section-title{
+font-size:36px;
+margin-bottom:30px;
+}
+
+/* CARDS */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:#151515;
+padding:25px;
+border-radius:8px;
+}
+
+/* STOCK GRID */
+
+.stock-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.stock-card{
+background:#181818;
+padding:20px;
+border-radius:8px;
+}
+
+.price{
+font-size:28px;
+color:#00ff9d;
+}
+
+/* CONTACT FORM */
+
+.contact-form{
+max-width:500px;
+margin:auto;
+display:flex;
+flex-direction:column;
+}
+
+input, textarea{
+padding:12px;
+margin-bottom:15px;
+background:#1b1b1b;
+border:none;
+color:white;
+border-radius:4px;
+}
+
+/* FOOTER */
+
+footer{
+background:#050505;
+padding:40px;
+text-align:center;
+color:#9ca3af;
+}
