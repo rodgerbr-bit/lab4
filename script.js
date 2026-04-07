@@ -191,29 +191,35 @@ const stocks = [
 
 // Function to fetch and update stock prices
 async function updateStockPrices() {
-  for (let stock of stocks) {
+  // Map each stock to a fetch promise so they run in parallel
+  const requests = stocks.map(async (stock) => {
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.symbol}&token=${API_KEY}`);
       const data = await res.json();
-
       const priceElement = document.getElementById(stock.elementId);
-      if (priceElement && data.c) {
-        const oldPrice = parseFloat(priceElement.textContent.replace('$',''));
-        const newPrice = data.c.toFixed(2);
-        priceElement.textContent = `$${newPrice}`;
 
+      if (priceElement && data.c) {
+        const oldPrice = parseFloat(priceElement.textContent.replace('$', '')) || 0;
+        const newPrice = data.c.toFixed(2);
+        
+        priceElement.textContent = `$${newPrice}`;
         // Color green if price up, red if down
-        priceElement.style.color = newPrice >= oldPrice ? "#00ff9d" : "#ff4c4c";
+        priceElement.style.color = parseFloat(newPrice) >= oldPrice ? "#00ff9d" : "#ff4c4c";
       }
     } catch (err) {
       console.error(`Error fetching ${stock.symbol}:`, err);
     }
-  }
+  });
+
+  // Run all requests at once
+  await Promise.all(requests);
 }
 
-// Update prices every 10 seconds
-setInterval(updateStockPrices, 10000);
-updateStockPrices(); // run immediately on load
+// Initial load
+updateStockPrices();
 
-// simulate market movement every 30s
-setInterval(updatePrices, 30000);
+// Update prices every 30 seconds (conservative to avoid rate limits)
+setInterval(updateStockPrices, 30000);
+
+// REMOVE or RENAME the broken line: 
+// setInterval(updatePrices, 30000); // This was causing the error
