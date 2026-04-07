@@ -191,27 +191,33 @@ const stocks = [
 
 // Function to fetch and update stock prices
 async function updateStockPrices() {
-  // Map each stock to a fetch promise so they run in parallel
   const requests = stocks.map(async (stock) => {
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.symbol}&token=${API_KEY}`);
       const data = await res.json();
       const priceElement = document.getElementById(stock.elementId);
 
-      if (priceElement && data.c) {
-        const oldPrice = parseFloat(priceElement.textContent.replace('$', '')) || 0;
-        const newPrice = data.c.toFixed(2);
+      if (priceElement && data.c && data.pc) {
+        const currentPrice = data.c;
+        const previousClose = data.pc;
         
-        priceElement.textContent = `$${newPrice}`;
-        // Color green if price up, red if down
-        priceElement.style.color = parseFloat(newPrice) >= oldPrice ? "#00ff9d" : "#ff4c4c";
+        // Update the text
+        priceElement.textContent = `$${currentPrice.toFixed(2)}`;
+        
+        // Change color based on daily performance
+        if (currentPrice > previousClose) {
+          priceElement.style.color = "#00ff9d"; // Bright Green
+        } else if (currentPrice < previousClose) {
+          priceElement.style.color = "#ff4c4c"; // Bright Red
+        } else {
+          priceElement.style.color = "white";    // No change
+        }
       }
     } catch (err) {
       console.error(`Error fetching ${stock.symbol}:`, err);
     }
   });
 
-  // Run all requests at once
   await Promise.all(requests);
 }
 
